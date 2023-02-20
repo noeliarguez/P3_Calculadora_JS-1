@@ -1,0 +1,167 @@
+<!DOCTYPE html> <!-- Página HTML5 -->
+<html>
+  <head>
+      <h2 class="cabecera">Calculadora de CORE</h2>
+      <meta charset="utf-8">
+      <script type="text/javascript">
+        
+        //PANTALLA
+        const numero = () =>{
+          return Number(document.getElementById("pantalla").value)
+        }
+      
+       const rellenar = (v) =>{
+        document.getElementById("pantalla").value = v;
+       }
+
+       const vaciar = () => {
+        rellenar (" ");
+       }
+
+       //OPERACIONES UNITARIAS
+        const sq = () => {
+          if (! validar()) return;
+          let num =document.getElementById("pantalla");
+          num.value = num.value * num.value;
+          rellenar_info();
+         //let n = numero();
+         //rellenar (n*n);
+         }
+
+        const fact = ()  => {
+          if (! validar()) return;
+          let n = numero();
+          let res = 1;
+          for (let i = n; i > 1; i--){
+            res *= i;
+          }
+         rellenar (res);
+         rellenar_info();
+        }
+
+      //OPERACIONES BINARIAS
+      let acumulador = 0;
+      let operador ="";
+
+      const add = () => {
+        if (! validar()) return;
+      acumula(numero());
+      operador = "+";
+      vaciar();
+      rellenar_info();
+     }
+
+      const sub = () => {
+        if (! validar()) return;
+     acumula(numero());
+      operador = "-";
+      vaciar();
+      rellenar_info();
+     } 
+
+      const mul = () => {
+        if (! validar()) return;
+      acumula(numero());
+      operador = "*";
+      vaciar();
+      rellenar_info();
+     }
+
+      const div = () => {
+        if (! validar()) return;
+      acumula(numero());
+      operador = "/";
+      vaciar();
+      rellenar_info();
+     }
+    
+      const eq = () => {
+        if (! validar()) return;
+      acumula(numero());
+      operador = "";
+      rellenar(acumulador);
+      rellenar_info();
+     }
+
+    const acumula = n => {
+      if (! validar()) return;
+      switch (operador){
+        case "":
+         acumulador = n;
+         break;
+        case "+":
+         acumulador += n;
+         break; 
+        case "-":
+         acumulador -= n;
+         break;
+        case "*":
+        acumulador *= n;
+         break; 
+        case "/":
+        acumulador /= n;
+         break; 
+      }
+    }
+
+    // INFO
+    const rellenar_info = () => {
+      const n = numero();
+      let msg = "";
+      if (n < 100){
+        msg = "Info: El resultado es menor que 100";
+      } else if( n > 200){
+        msg = "Info: El resultado es superior a 200";
+      } else {
+        msg = "Info: El resultado está entre 100 y 200";
+      }
+      document.getElementById("info").innerHTML = msg;
+    
+
+     // if (n < 100){
+      //  document.getElementById("info").innerHTML = "Info: El resultado es menor que 100";
+     //  } else if (n > 200){
+       //  document.getElementById("info").innerHTML = "Info: El resultado está entre 100 y 200 ";
+       // }
+       // else{
+        //  document.getElementById("info").innerHTML = "Info: El resultado es superior a 200 ";
+     //   }
+    }
+     
+    // VALIDAR
+    const validar= () =>{
+      if (Number.isNaN(numero())) {
+        rellenar ("Error");
+        return false;
+      } else{
+        return true;
+      }
+
+      if (numeros().some(Number.isNaN(n))){
+        rellenar ("Error");
+        return false;
+      } else{
+        return true;
+      }
+     }
+    
+
+      </script>
+  </head>
+
+  <body>
+    <input type="text" id="pantalla"/>
+    <h2 id="info" class="grande" title="Info sobre el número"  >Info sobre el número</h2>
+  <div>
+    <button id="cuadrado" onclick="sq()">x<xsup>2</sup></button>
+    <button id="factorial" onclick=" fact ()">x!</button>
+    <button id="raiz"> &#8730 x</button>
+  </div>
+  <div>
+    <button id="suma" onclick="add()">+</button>
+    <button id="resta" onclick="sub()">-</button>
+    <button id="multiplicacion" onclick="mul()">*</button>
+    <button id="division" onclick=" div()">/</button>
+    <button id="igual" onclick="  eq()">=</button>
+  </div>
+  </body>
